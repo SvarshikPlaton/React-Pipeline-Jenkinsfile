@@ -26,7 +26,7 @@ pipeline {
         stage("deploy") {
             steps {
                 sh """
-                scp -rp ./ReactDeploy/build/* react-app@172.31.17.100:/home/react-app/react-production
+                scp -rp ./ReactDeploy/build/* react-app@172.31.31.72:/home/react-app/react-production
                 """
             }
         }
