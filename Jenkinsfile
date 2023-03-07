@@ -65,7 +65,7 @@ pipeline {
     }
     post {
         always {
-            discordSend description: "Jenkins pipeline build: ${currentBuild.currentResult}"
+            discordSend description: "Jenkins pipeline build: ${currentBuild.currentResult}",
                 link: env.BUILD_URL,
                 result: currentBuild.currentResult,
                 title: JOB_NAME,
