@@ -5,20 +5,24 @@ pipeline {
         WEBHOOK_URL = 'DiscordWebHook'
         BUCKET = 'test.khai'
     }
+    parameters {
+        string(name: 'BUILD_NUMBER', description: 'Deploy build number')
+    }
     stages {
         stage('Download File') {
             steps {
                 script {
-                    def s3ObjectKey = 'my-file.txt'
-                    def s3ObjectVersionId = 'my-file-version-id'
-                    def destinationFolder = 'downloads/'
-
-                    withAWS(credentials: 'my-aws-credentials', region: 'us-east-1') {
-                        s3Download(bucket: "${BUCKET}",
-                                   path: s3ObjectKey,
-                                   versionId: s3ObjectVersionId,
+                    withAWS(credentials: SERVER_CREDENTIALS, region: 'us-east-1') {
+                        sh("pwd")
+                        s3Download(bucket: BUCKET,
+                                   path: "build-${BUILD_NUMBER}",
                                    overwrite: true,
-                                   destination: destinationFolder)
+                                   destination: './')
+                    }
+                }
+            stage('deploy') {
+                steps {
+                        sh('pwd')
                     }
                 }
             }

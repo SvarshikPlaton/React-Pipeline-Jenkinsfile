@@ -8,10 +8,7 @@ pipeline {
     stages {
         stage('clone') {
             steps {
-                sh '''
-                rm -rf ReactDeploy
-                git clone git@github.com:SvarshikPlaton/ReactDeploy.git
-                '''
+                sh ("git clone git@github.com:SvarshikPlaton/ReactDeploy.git")
             }
         }
         stage('build') {
@@ -43,14 +40,19 @@ pipeline {
                 }
             }
         }
+        stage('clear workspace') {
+            steps {
+                sh('rm -rf ReactDeploy')
+            }
+        }
     }
     post {
         always {
                 discordSend description: "Jenkins pipeline build: ${currentBuild.currentResult}",
-                link: env.BUILD_URL,
-                result: currentBuild.currentResult,
-            title: JOB_NAME,
-            webhookURL: "${WEBHOOK_URL}"
+                    link: env.BUILD_URL,
+                    result: currentBuild.currentResult,
+                    title: JOB_NAME,
+                    webhookURL: "${WEBHOOK_URL}"
         }
     }
 }
