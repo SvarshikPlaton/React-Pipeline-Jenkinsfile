@@ -34,8 +34,11 @@ pipeline {
                 withAWS(credentials: "${SERVER_CREDENTIALS}", region: 'eu-central-1') {
                     script {
                         println 'Uploading artifacts...'
-                        sh ('tar -cvzf "./ReactDeploy/build-${BUILD_NUMBER}.tar.gz" "./ReactDeploy/build"')
-                        s3Upload(file: "./ReactDeploy/build-${BUILD_NUMBER}.tar.gz", bucket: "${BUCKET}")
+                        sh '''
+                        cd ./ReactDeploy/build/
+                        tar -cvzf "build-${BUILD_NUMBER}.tar.gz" ./*
+                        '''
+                        s3Upload(file: "build-${BUILD_NUMBER}.tar.gz", bucket: "${BUCKET}")
                     }
                 }
             }
