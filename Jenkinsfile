@@ -1,8 +1,9 @@
 pipeline {
-    agent { label 'yarn' }
+    agent { label 'node.js' }
     environment {
         SERVER_CREDENTIALS = 's3-test'
         WEBHOOK_URL = 'DiscordWebHook'
+        BUCKET = 'test.khai'
     }
     stages {
         stage('clone') {
@@ -33,7 +34,8 @@ pipeline {
                 withAWS(credentials: "${SERVER_CREDENTIALS}", region: 'eu-central-1') {
                     script {
                         println 'Uploading artifacts...'
-                        s3Upload(file: './ReactDeploy/build', bucket: 'test.khai')
+                        tar -cvzf "./ReactDeploy/build-${BUILD_NUMBER}.tar.gz" "./ReactDeploy/build"
+                        s3Upload(file: "./ReactDeploy/build-${BUILD_NUMBER}.tar.gz", bucket: "${BUCKET}")
                     }
                 }
             }
