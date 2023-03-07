@@ -40,19 +40,17 @@ pipeline {
                 }
             }
         }
-        stage('clear workspace') {
-            steps {
-                sh('rm -rf ReactDeploy')
-            }
-        }
     }
     post {
         always {
-                discordSend description: "Jenkins pipeline build: ${currentBuild.currentResult}",
-                    link: env.BUILD_URL,
-                    result: currentBuild.currentResult,
-                    title: JOB_NAME,
-                    webhookURL: "${WEBHOOK_URL}"
+            discordSend description: "Jenkins pipeline build: ${currentBuild.currentResult}",
+                link: env.BUILD_URL,
+                result: currentBuild.currentResult,
+                title: JOB_NAME,
+                webhookURL: "${WEBHOOK_URL}"
+
+            println 'clear workspace' 
+            sh('rm -rf ReactDeploy')
         }
     }
 }
