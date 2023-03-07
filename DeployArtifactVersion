@@ -13,10 +13,10 @@ pipeline {
             steps {
                 script {
                     withAWS(credentials: SERVER_CREDENTIALS, region: 'eu-central-1') {
-                        sh("pwd")
                         s3Download(bucket: BUCKET,
                             file: "build-${BUILD_NUMBER}.tar.gz",
                             path: './')
+                        sh('ls')
                     }
                 }
             }
