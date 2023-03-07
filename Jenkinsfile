@@ -8,29 +8,34 @@ pipeline {
     stages {
         stage('clone') {
             steps {
-                if (fileExists("ReactDeploy")) {
-                    if (fileExists("./ReactDeploy/node_modules") && !(fileExists("./node_modules"))) {
-                        sh "cp -r ./ReactDeploy/node_modules ./node_modules"
+                script {
+                    if (fileExists("ReactDeploy")) {
+                        if (fileExists("./ReactDeploy/node_modules") && !(fileExists("./node_modules"))) {
+                            sh "cp -r ./ReactDeploy/node_modules ./node_modules"
+                        }
+                        sh 'git pull'
+                    } else {
+                        println 'ReactDeploy already existing'
+                        git url: 'git@github.com:SvarshikPlaton/ReactDeploy.git'
                     }
-                    sh 'git pull'
-                } else {
-                    println 'ReactDeploy already existing'
-                    git url: 'git@github.com:SvarshikPlaton/ReactDeploy.git'
                 }
             }
         }
         stage('build') {
             steps {
-                if (fileExists("./node_modules")) {
-                    sh "cp -r ./node_modules ./ReactDeploy/node_modules"
-                } else {
-                    sh "npm install --prefix ./ReactDeploy"
+                script {
+                    if (fileExists("./node_modules")) {
+                       sh "cp -r ./node_modules ./ReactDeploy/node_modules"
+                    } else {
+                        sh "npm install --prefix ./ReactDeploy"
+                    }
                 }
                 sh '''
                 cd ReactDeploy
                 npm run build
                 chmod -R 755 ./build/*
                 '''
+                
             }
         }
         stage('deploy') {
