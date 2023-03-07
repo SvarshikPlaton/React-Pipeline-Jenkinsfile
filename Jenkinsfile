@@ -20,7 +20,7 @@ pipeline {
                         '''
                     } else {
                         println 'ReactDeploy is not existing. Cloning...'
-                        git url: 'git@github.com:SvarshikPlaton/ReactDeploy.git', force: true
+                        sh 'git clone git@github.com:SvarshikPlaton/ReactDeploy.git'
                     }
                 }
             }
