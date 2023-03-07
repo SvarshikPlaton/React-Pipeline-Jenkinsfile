@@ -10,6 +10,7 @@ pipeline {
             steps {
                 script {
                     if (fileExists("ReactDeploy")) {
+                        println 'ReactDeploy is already existing'
                         if (fileExists("./ReactDeploy/node_modules") && !(fileExists("./node_modules"))) {
                             sh "cp -r ./ReactDeploy/node_modules ./node_modules"
                         }
@@ -18,8 +19,8 @@ pipeline {
                             git pull
                         '''
                     } else {
-                        println 'ReactDeploy already existing'
-                        git url: 'git@github.com:SvarshikPlaton/ReactDeploy.git'
+                        println 'ReactDeploy is not existing. Cloning...'
+                        git url: 'git@github.com:SvarshikPlaton/ReactDeploy.git', force: true
                     }
                 }
             }
@@ -28,7 +29,7 @@ pipeline {
             steps {
                 script {
                     if (fileExists("./node_modules")) {
-                       sh "cp -r ./node_modules ./ReactDeploy/node_modules"
+                       sh "cp -r ./node_modules ./ReactDeploy/"
                     } else {
                         sh "npm install --prefix ./ReactDeploy"
                     }
