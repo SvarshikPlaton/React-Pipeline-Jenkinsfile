@@ -12,7 +12,7 @@ pipeline {
         stage('Download File') {
             steps {
                 script {
-                    withAWS(credentials: SERVER_CREDENTIALS, region: 'us-east-1') {
+                    withAWS(credentials: SERVER_CREDENTIALS, region: 'eu-central-1') {
                         sh("pwd")
                         s3Download(bucket: BUCKET,
                                    path: "build-${BUILD_NUMBER}",
