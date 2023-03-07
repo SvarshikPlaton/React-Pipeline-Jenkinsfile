@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('clone') {
             steps {
-                sh ("git clone git@github.com:SvarshikPlaton/ReactDeploy.git")
+                git url: 'git@github.com:SvarshikPlaton/ReactDeploy.git', force: true
             }
         }
         stage('build') {
@@ -16,7 +16,7 @@ pipeline {
                 sh '''
                 cd ReactDeploy
                 npm install
-                yarn build
+                npm run build
                 chmod -R 755 ./build/*
                 '''
             }
