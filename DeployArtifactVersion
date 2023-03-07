@@ -25,7 +25,7 @@ pipeline {
                 sh '''
                     tar -xvf "./build_archive/build-${BUILD_NUMBER}.tar.gz" -C ./build_archive/
                     rm -f ./build_archive/build-${BUILD_NUMBER}.tar.gz
-                    react-app@172.31.31.67 'rm -rf /var/www/react-application/html/*'
+                    react-app@172.31.31.67 "rm -rf /var/www/react-application/html/*"
                     scp -rp ./build_archive/* react-app@172.31.31.67:/var/www/react-application/html
                 '''
             }
