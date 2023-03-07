@@ -15,9 +15,8 @@ pipeline {
                     withAWS(credentials: SERVER_CREDENTIALS, region: 'eu-central-1') {
                         sh("pwd")
                         s3Download(bucket: BUCKET,
-                                   path: "build-${BUILD_NUMBER}",
-                                   overwrite: true,
-                                   destination: './')
+                            file: "build-${BUILD_NUMBER}",
+                            path: './')
                     }
                 }
             }
