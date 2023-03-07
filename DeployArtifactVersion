@@ -15,8 +15,8 @@ pipeline {
                     withAWS(credentials: SERVER_CREDENTIALS, region: 'eu-central-1') {
                         s3Download(bucket: BUCKET,
                             file: "build-${BUILD_NUMBER}.tar.gz",
-                            path: './')
-                        sh('ls')
+                            path: "build-${BUILD_NUMBER}.tar.gz")
+                        sh('ls -al')
                     }
                 }
             }
