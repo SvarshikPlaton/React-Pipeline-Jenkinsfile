@@ -30,16 +30,14 @@ pipeline {
                 script {
                     if (fileExists("./node_modules")) {
                        sh "cp -r ./node_modules ./ReactDeploy/"
-                    } else {
-                        sh "npm install --prefix ./ReactDeploy"
-                    }
+                    } 
                 }
                 sh '''
                 cd ReactDeploy
+                npm install 
                 npm run build
                 chmod -R 755 ./build/*
                 '''
-                
             }
         }
         stage('deploy') {
