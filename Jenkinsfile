@@ -2,7 +2,7 @@ pipeline {
     agent { label 'node.js' }
     environment {
         SERVER_CREDENTIALS = 's3-test'
-        WEBHOOK_URL = 'DiscordWebHook'
+        WEBHOOK_URL = credentials('DiscordWebHook')
         BUCKET = 'test.khai'
     }
     stages {
@@ -66,8 +66,7 @@ pipeline {
     post {
         always {
             script {
-                def url = credentials(WEBHOOK_URL)
-                echo(url)
+                echo("${WEBHOOK_URL}")
                 discordSend description: "Jenkins pipeline build: ${currentBuild.currentResult}",
                     link: "${url}",
                     result: currentBuild.currentResult,
