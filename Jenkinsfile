@@ -38,7 +38,7 @@ pipeline {
                         cd ./ReactDeploy/build/
                         tar -cvzf "build-${BUILD_NUMBER}.tar.gz" ./*
                         '''
-                        s3Upload(file: "./ReactDeploy/build-${BUILD_NUMBER}.tar.gz", bucket: "${BUCKET}")
+                        s3Upload(file: "./ReactDeploy/build/build-${BUILD_NUMBER}.tar.gz", bucket: "${BUCKET}")
                     }
                 }
             }
