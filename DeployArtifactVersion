@@ -15,8 +15,8 @@ pipeline {
                     withAWS(credentials: SERVER_CREDENTIALS, region: 'eu-central-1') {
                         sh('mkdir build_archive')
                         s3Download(bucket: BUCKET,
-                            file: "./build/build-${BUILD_NUMBER}.tar.gz",
-                            path: "./build_archive/build-${BUILD_NUMBER}.tar.gz")
+                            file: "./build_archive/build/build-${BUILD_NUMBER}.tar.gz",
+                            path: "build-${BUILD_NUMBER}.tar.gz")
                     }
                 }
             }
