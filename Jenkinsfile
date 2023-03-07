@@ -66,7 +66,7 @@ pipeline {
     post {
         always {
             withCredentials([string(credentialsId: "${WEBHOOK_URL}", variable: 'URL')]) { 
-                echo "My secret text is '${URL}'"
+                echo "My secret text is ${URL}"
                 discordSend description: "Jenkins pipeline build: ${currentBuild.currentResult}",
                     link: env.BUILD_URL,
                     result: currentBuild.currentResult,
