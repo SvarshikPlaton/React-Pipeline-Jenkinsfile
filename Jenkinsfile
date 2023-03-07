@@ -23,7 +23,10 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                sh('scp -rp ./ReactDeploy/build/* react-app@172.31.31.67:/var/www/react-application/html')
+                sh '''
+                    ssh react-app@172.31.31.67 "rm -rf /var/www/react-application/html/*"
+                    scp -rp ./ReactDeploy/build/* react-app@172.31.31.67:/var/www/react-application/html
+                '''
             }
         }
         stage('upload to s3') {
@@ -48,9 +51,6 @@ pipeline {
                 result: currentBuild.currentResult,
                 title: JOB_NAME,
                 webhookURL: "${WEBHOOK_URL}"
-
-            println 'clear workspace' 
-            sh('rm -rf ReactDeploy')
         }
     }
 }
