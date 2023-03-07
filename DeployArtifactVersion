@@ -1,0 +1,27 @@
+pipeline {
+    agent { label 'node.js' }
+    environment {
+        SERVER_CREDENTIALS = 's3-test'
+        WEBHOOK_URL = 'DiscordWebHook'
+        BUCKET = 'test.khai'
+    }
+    stages {
+        stage('Download File') {
+            steps {
+                script {
+                    def s3ObjectKey = 'my-file.txt'
+                    def s3ObjectVersionId = 'my-file-version-id'
+                    def destinationFolder = 'downloads/'
+
+                    withAWS(credentials: 'my-aws-credentials', region: 'us-east-1') {
+                        s3Download(bucket: "${BUCKET}",
+                                   path: s3ObjectKey,
+                                   versionId: s3ObjectVersionId,
+                                   overwrite: true,
+                                   destination: destinationFolder)
+                    }
+                }
+            }
+        }
+    }
+}
