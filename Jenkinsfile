@@ -13,7 +13,10 @@ pipeline {
                         if (fileExists("./ReactDeploy/node_modules") && !(fileExists("./node_modules"))) {
                             sh "cp -r ./ReactDeploy/node_modules ./node_modules"
                         }
-                        sh 'git pull'
+                        sh '''
+                            cd ReactDeploy
+                            git pull
+                        '''
                     } else {
                         println 'ReactDeploy already existing'
                         git url: 'git@github.com:SvarshikPlaton/ReactDeploy.git'
