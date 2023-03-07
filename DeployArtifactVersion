@@ -13,10 +13,8 @@ pipeline {
             steps {
                 script {
                     withAWS(credentials: SERVER_CREDENTIALS, region: 'eu-central-1') {
-                         sh('rm -rf ./build_archive')
-                        sh('mkdir build_archive')
                         s3Download(bucket: BUCKET,
-                            file: "./build_archive/build/build-${BUILD_NUMBER}.tar.gz",
+                            file: "./build_archive/build-${BUILD_NUMBER}.tar.gz",
                             path: "build-${BUILD_NUMBER}.tar.gz")
                     }
                 }
