@@ -20,11 +20,11 @@ pipeline {
                                    destination: './')
                     }
                 }
-            stage('deploy') {
-                steps {
-                        sh('pwd')
-                    }
-                }
+            }
+        }
+        stage('deploy') {
+            steps {
+                sh('pwd')
             }
         }
     }
